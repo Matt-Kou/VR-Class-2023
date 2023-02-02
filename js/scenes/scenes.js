@@ -8,17 +8,10 @@ export default () => {
 
    return {
       enableSceneReloading: true,
-      scenes: [ 
-         { name: "DemoExample"       , path: "./demoExample.js"       },
-         { name: "DemoKP0"           , path: "./demoKP0.js"           },
-         { name: "DemoKP1"           , path: "./demoKP1.js"           },
-         { name: "DemoKP2"           , path: "./demoKP2.js"           },
-         { name: "DemoKP3"           , path: "./demoKP3.js"           },
-         { name: "DemoCanvas"        , path: "./demoCanvas.js"        },
-         { name: "DemoTwoCubes"      , path: "./demoTwoCubes.js"      },
-         { name: "DemoTrianglesMesh" , path: "./demoTrianglesMesh.js" },
-         { name: "DemoOpacity"       , path: "./demoOpacity.js"       },
+      scenes: [
+         { name: "DemoExample" , path: "./demoExample.js" },
+         // { name: "robot" , path: "./robot.js" },
+         { name: "BallBounce" , path: "./ball_bounce.js" },
       ]
    };
 }
-
