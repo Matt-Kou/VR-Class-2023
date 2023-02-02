@@ -8,10 +8,10 @@ export default () => {
 
    return {
       enableSceneReloading: true,
-      scenes: [ 
+      scenes: [
          { name: "DemoExample" , path: "./demoExample.js" },
-         { name: "DemoKP0"     , path: "./demoKP0.js"     },
-         { name: "DemoKP1"     , path: "./demoKP1.js"     },
+         // { name: "robot" , path: "./robot.js" },
+         { name: "BallBounce" , path: "./ball_bounce.js" },
       ]
    };
 }
