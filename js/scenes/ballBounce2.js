@@ -10,13 +10,13 @@ let physics = (obj) => {
     obj.loc = cg.add(obj.loc, cg.scale(cg.mix(obj.v, vp, .5), dt))
     obj.v = vp
     if (obj.loc[1] < 0.) {
-        obj.v[1] = -obj.v[1] * rebounce
+        obj.v[1] = -obj.v[1]*rebounce
         obj.loc[1] = 0.
     }
     obj.setMatrix(cg.mMultiply(cg.mTranslate(obj.loc), cg.mScale(obj.scale)))
 }
 export const init = async model => {
-    model.turnY(3.14 / 2);
+    model.turnY(3.14/2);
     let ball = model.add('sphere');
     ball.loc = [0, 1.5, 0]
     ball.v = [0, 0, 0]

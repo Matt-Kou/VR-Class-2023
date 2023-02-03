@@ -3,7 +3,7 @@ const buttonNum = 7;
 import { corelink_event } from "../../util/corelink_sender.js";
 import * as cg from "./cg.js";
 
-const debug = false;
+const debug = true;
 
 function console_log(content) {
   if(debug) {
