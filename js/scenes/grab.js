@@ -56,7 +56,7 @@ let right_not_pressing = () => {
 }
 
 export const init = async model => {
-    let ball = model.add().move(0, 1.5, 0)
+    let ball = model.add()
     ball.r = .15;
     ball.add("sphere").scale(ball.r)
     let offset = [-.0025, .005, -.03];
@@ -64,9 +64,6 @@ export const init = async model => {
     let bend = Math.PI / 4;
     let beam = model.add();
     beam.add('tubeZ').color(0, 0, 10)
-
-    let anchor = model.add()
-    anchor.add("sphere").scale(.05).color(1, 1, 0)
 
     let pressing = false
     model.animate(() => {
@@ -76,42 +73,19 @@ export const init = async model => {
 
         let m = controllerMatrix.right
         m = cg.mMultiply(m, cg.mRotateX(-bend))
-        m = cg.mMultiply(m, cg.mScale(.002, .002, 2))
+        m = cg.mMultiply(m, cg.mScale(.002, .002, 1.1 + Math.sin(t / 2)))
         m = cg.mMultiply(m, cg.mTranslate(.0, .0, -1))
         m = cg.mMultiply(m, cg.mTranslate(offset))
         beam.setMatrix(m)
 
         let toBall = cg.add(ball.getGlobalMatrix().slice(12, 15), cg.scale(m.slice(12, 15), -1))
-        let dir = cg.scale(cg.normalize(m.slice(8, 11)), -1)
-        
-        anchor.identity().move(m.slice(12, 15)).move(dir)
-        // dir = cg.normalize(dir)
+        let dir = cg.scale(m.slice(8, 11), -1)
+        dir = cg.normalize(dir)
         let d = cg.norm(cg.cross(toBall, dir))
-        let press = !right_not_pressing()
-        if (press) {
-            if (!pressing) {
-                if (d <= ball.r) {
-                    // hit!
-                    ball.color(0, 1, 0)
-                    ball.grab = cg.mMultiply(cg.mInverse(m), ball.getGlobalMatrix())
-                } else {
-                    ball.color(1, 1, 1)
-                }
-            } else {
-                ball.color(0, 1, 0)
-                ball.setMatrix(cg.mMultiply(m, ball.grab))
-            }
-            pressing = true;
-        } else {
-            if (d <= ball.r) {
-                // hit!
-                ball.color(1, 0, 0)
-            } else {
-                ball.color(1, 1, 1)
-            }
-            pressing = false;
+        if (d <= ball.r) {
+            // hit!
+            ball.color(1,0,0)
         }
-
     });
 }
 

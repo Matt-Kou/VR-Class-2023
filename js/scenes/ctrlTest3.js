@@ -78,7 +78,7 @@ export const init = async model => {
 
         let m = controllerMatrix.right
         m = cg.mMultiply(m, cg.mRotateX(-bend))
-        m = cg.mMultiply(m, cg.mScale(.002, .002, 1 + Math.sin(t)))
+        m = cg.mMultiply(m, cg.mScale(.002, .002, 1.1 + Math.sin(t / 2)))
         m = cg.mMultiply(m, cg.mTranslate(.0, .0, -1))
         m = cg.mMultiply(m, cg.mTranslate(offset))
         beam.setMatrix(m)
@@ -90,6 +90,7 @@ export const init = async model => {
             }
             model._children = []
             ball_list = [];
+            new_ball()
             pressing = false;
         } else if (!pressing && buttonState.left[1].pressed) {
             pressing = true
@@ -97,7 +98,7 @@ export const init = async model => {
             model._children.pop()
         } else if (!pressing && buttonState.right[1].pressed) {
             pressing = true
-            color = [Math.random(), Math.random(), Math.random()]
+            color = [Math.random()*2, Math.random()*2, Math.random()*2]
         } else if (!pressing && buttonState.right[0].pressed) {
             pressing = true
             let new_loc = anchor_ball.getGlobalMatrix().slice(12, 15)

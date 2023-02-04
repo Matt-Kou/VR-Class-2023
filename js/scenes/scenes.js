@@ -10,7 +10,7 @@ export default () => {
         enableSceneReloading: true,
         scenes: [
             {name: "DemoExample", path: "./demoExample.js"},
-            // { name: "robot" , path: "./robot.js" },
+            {name: "robot", path: "./robot.js"},
             {name: "BallBounce", path: "./ball_bounce.js"},
             {name: "BallBounce2", path: "./ballBounce2.js"},
             {name: "BallBounce3", path: "./ballBounce3.js"},
@@ -20,6 +20,8 @@ export default () => {
             {name: "ctrlTest", path: "./ctrlTest.js"},
             {name: "ctrlTest2", path: "./ct2.js"},
             {name: "ctrlTest3", path: "./ctrlTest3.js"},
+            {name: "hit", path: "./hit.js"},
+            {name: "grab", path: "./grab.js"},
         ]
     };
 }

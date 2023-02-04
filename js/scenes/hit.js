@@ -56,7 +56,7 @@ let right_not_pressing = () => {
 }
 
 export const init = async model => {
-    let ball = model.add().move(0, 1.5, 0)
+    let ball = model.add()
     ball.r = .15;
     ball.add("sphere").scale(ball.r)
     let offset = [-.0025, .005, -.03];
@@ -84,9 +84,7 @@ export const init = async model => {
         let d = cg.norm(cg.cross(toBall, dir))
         if (d <= ball.r) {
             // hit!
-            ball.color(1, 0, 0)
-        } else {
-            ball.color(1, 1, 1)
+            ball.color(1,0,0)
         }
     });
 }
