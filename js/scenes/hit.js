@@ -56,21 +56,16 @@ let right_not_pressing = () => {
 }
 
 export const init = async model => {
+    let ball = model.add()
+    ball.r = .15;
+    ball.add("sphere").scale(ball.r)
     let offset = [-.0025, .005, -.03];
     t = Date.now() / 1000
-    let color = [Math.random(), Math.random(), Math.random()]
-
     let bend = Math.PI / 4;
     let beam = model.add();
     beam.add('tubeZ').color(0, 0, 10)
 
-    let anchor_ball;
-    let new_ball = () => {
-        anchor_ball = model.add('sphere')
-    }
-    new_ball()
     let pressing = false
-    let index = 0
     model.animate(() => {
         let new_time = Date.now() / 1000
         dt = new_time - t;
@@ -83,41 +78,14 @@ export const init = async model => {
         m = cg.mMultiply(m, cg.mTranslate(offset))
         beam.setMatrix(m)
 
-        anchor_ball.identity().move(m.slice(12, 15)).move(cg.scale(m.slice(8, 11), -1)).scale(scale).color(color)
-        if (buttonState.left[0].pressed) {
-            for (const ball of ball_list) {
-                ball.remove(0)
-            }
-            model._children = []
-            ball_list = [];
-            new_ball()
-            pressing = false;
-        } else if (!pressing && buttonState.left[1].pressed) {
-            pressing = true
-            ball_list.pop();
-            model._children.pop()
-        } else if (!pressing && buttonState.right[1].pressed) {
-            pressing = true
-            color = [Math.random()*2, Math.random()*2, Math.random()*2]
-        } else if (!pressing && buttonState.right[0].pressed) {
-            pressing = true
-            let new_loc = anchor_ball.getGlobalMatrix().slice(12, 15)
-            anchor_ball.scale = scale
-            anchor_ball.index = index
-            index += 1
-            anchor_ball.v = cg.scale(cg.add(new_loc, cg.scale(anchor_ball.loc, -1)), 1 / dt)
-            console.log(anchor_ball.v)
-            ball_list.push(anchor_ball)
-            new_ball()
-            // ball.audio("../media/sound/drums.ogg")
-            // ball.playAudio()
-        } else if (left_not_pressing() && right_not_pressing()) {
-            pressing = false;
+        let toBall = cg.add(ball.getGlobalMatrix().slice(12, 15), cg.scale(m.slice(12, 15), -1))
+        let dir = cg.scale(m.slice(8, 11), -1)
+        dir = cg.normalize(dir)
+        let d = cg.norm(cg.cross(toBall, dir))
+        if (d <= ball.r) {
+            // hit!
+            ball.color(1,0,0)
         }
-        for (const ball of ball_list) {
-            physics(ball);
-        }
-        anchor_ball.loc = anchor_ball.getGlobalMatrix().slice(12, 15)
     });
 }
 
