@@ -17,6 +17,9 @@ export default () => {
             {name: "buttonTest", path: "./buttonTest.js"},
             // {name: "buttonTest2", path: "./buttonTest2.js"},
             {name: "buttonAndCollision", path: "./buttonTest3.js"},
+            {name: "ctrlTest", path: "./ctrlTest.js"},
+            {name: "ctrlTest2", path: "./ct2.js"},
+            {name: "ctrlTest3", path: "./ctrlTest3.js"},
         ]
     };
 }
