@@ -18,6 +18,7 @@ let free_fall = (loc, v0, a, t) => [cg.add(cg.add(loc, cg.scale(v0, t)), cg.scal
 
 let bounce = (p0, v0, a, t, step) => {
     console.log("bounce", p0, v0, a, t, step)
+    rubber.color(0, 1, 1)
     if (step === 5 || (p0[2] < 1e-8 && v0[2] < 1e-8)) {
         let [p, v] = free_fall(p0, v0, a, t)
         p[2] = 0
