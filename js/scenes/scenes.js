@@ -29,6 +29,7 @@ export default () => {
             {name: "tt04", path: "./tt04.js"},
             {name: "tt05", path: "./tt05.js"},
             {name: "tt06", path: "./tt06.js"},
+            {name: "tt07", path: "./tt07.js"},
         ]
     };
 }
