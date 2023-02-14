@@ -42,9 +42,6 @@ let get_rubber_mat = (rubber_mat) => {
     let rubber_to_world = rubber_mat
     if (cg.dot(rubber_to_world.slice(8, 11), cg.subtract(ball.loc, rubber_to_world.slice(12, 15))) < 0) {
         rubber_to_world = cg.mMultiply(rubber_to_world, cg.mScale(-1))
-        ball.color(0, 0, 0)
-    } else {
-        ball.color(1, 1, 1)
     }
     rubber_to_world = cg.mMultiply(rubber_to_world, cg.mTranslate(0, 0, k + 1))
     return [rubber_to_world, cg.mInverse(rubber_to_world)]
@@ -68,7 +65,16 @@ let bounce_rubber = (p0, v0, a, rubber_to_world, world_to_rubber) => {
     p0 = cg.mMultiply(world_to_rubber, cg.mTranslate(p0)).slice(12, 15)
     v0 = mult_v3_mat(v0, world_to_rubber)
     a = mult_v3_mat(a, world_to_rubber)
-    if (p0[2] < 0) p0[2] = 0
+    ball.color(1,1,1)
+    if (p0[2] < 1e-4) {
+        p0[2] = 0
+        if (Math.abs(v0[2]) < 1e-4) {
+            v0[2] = 0
+            ball.color(0,0,0)
+            return [cg.mMultiply(rubber_to_world, cg.mTranslate(p0)).slice(12, 15), mult_v3_mat(v0, rubber_to_world)]
+        }
+    }
+    ball.color(1,1,1)
     console.log("v0", v0, "p0", p0)
     let t = (-v0[2] - Math.sqrt(v0[2] * v0[2] - 2 * a[2] * p0[2])) / a[2]
     let pv
