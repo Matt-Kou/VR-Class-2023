@@ -128,26 +128,27 @@ export const init = async model => {
     ball.v = [0, 0, 0]
     ball.setMatrix(cg.mMultiply(cg.mTranslate(ball.loc), cg.mScale(ball_r)))
     let ball_holding = false
-    model.animate(() => {
-        let new_time = model.time
-        dt = new_time - t;
-        t = new_time;
 
-        paddle.setMatrix(controllerMatrix.right).turnX(-bend)
-        paddle.scale(paddle_scale)
-        if (buttonState.left[0].pressed) {
-            ball_holding = true
-            ball.loc = cg.add(controllerMatrix.left.slice(12, 15), cg.scale(controllerMatrix.left.slice(8, 11), -.1))
-        } else if (ball_holding) {
-            let new_loc = cg.add(controllerMatrix.left.slice(12, 15), cg.scale(controllerMatrix.left.slice(8, 11), -.1))
-            ball.v = cg.scale(cg.add(new_loc, cg.scale(ball.loc, -1)), 1 / dt)
-            ball.loc = new_loc
-            physics_ball(ball)
-            ball_holding = false
-        } else {
-            physics_ball(ball)
-        }
-        ball.setMatrix(cg.mMultiply(cg.mTranslate(ball.loc), cg.mScale(ball_r)))
-        rubber.mat = rubber.getGlobalMatrix()
-    });
+    // model.animate(() => {
+    //     let new_time = model.time
+    //     dt = new_time - t;
+    //     t = new_time;
+    //
+    //     paddle.setMatrix(controllerMatrix.right).turnX(-bend)
+    //     paddle.scale(paddle_scale)
+    //     if (buttonState.left[0].pressed) {
+    //         ball_holding = true
+    //         ball.loc = cg.add(controllerMatrix.left.slice(12, 15), cg.scale(controllerMatrix.left.slice(8, 11), -.1))
+    //     } else if (ball_holding) {
+    //         let new_loc = cg.add(controllerMatrix.left.slice(12, 15), cg.scale(controllerMatrix.left.slice(8, 11), -.1))
+    //         ball.v = cg.scale(cg.add(new_loc, cg.scale(ball.loc, -1)), 1 / dt)
+    //         ball.loc = new_loc
+    //         physics_ball(ball)
+    //         ball_holding = false
+    //     } else {
+    //         physics_ball(ball)
+    //     }
+    //     ball.setMatrix(cg.mMultiply(cg.mTranslate(ball.loc), cg.mScale(ball_r)))
+    //     rubber.mat = rubber.getGlobalMatrix()
+    // });
 }
