@@ -1,15 +1,36 @@
-import { g2 } from "../util/g2.js";
+/*
+  This demo shows how you can make simple heads-up display (HUD)
+  controls. The text labels will follow you as your roam around
+  in the scene.
 
-// This demo shows how you can add heads-up display (HUD) objects.
+  When you are wearing your VR headset, you can point your controller
+  beams as the lines of text, and they will change color. You can use
+  this selection logic to start to build your own HUD controls.
+*/
+import { lcb, rcb } from '../handle_scenes.js';
 
 export const init = async model => {
+   let isAnimate = 0, isItalic = 0, isClear = 0;
+   model.control('a', 'animate', () => isAnimate = ! isAnimate);
+   model.control('c', 'clear'  , () => isClear   = ! isClear  );
+   model.control('i', 'italic' , () => isItalic  = ! isItalic );
 
-   g2.textHeight(.1);
-   let obj1 = model.add('cube').texture(() => g2.clock(0,0,1,1)); // HUD object.
-   let obj2 = model.add('cube').texture(() => g2.clock(0,0,1,1)); // non-HUD object.
+   let text = `Now is the time   \nfor all good men  \nto come to the aid\nof their party.   ` .split('\n');
+
+   let label = model.add();
+
+   for (let line = 0 ; line < text.length ; line++)
+      label.add('label').move(0,-line,0).scale(.5);
 
    model.animate(() => {
-      obj1.hud().scale(.2,.2,.0001);
-      obj2.identity().move(0,1.5,-1).scale(.2,.2,.0001);
+      model.hud().scale(1);
+      label.identity().scale(.02);
+      label.flag('uTransparentTexture', isClear);
+      for (let line = 0 ; line < text.length ; line++) {
+         let obj = label.child(line);
+         obj.info((isItalic ? '<i>' : '') + text[line])
+	    .color(lcb.hitLabel(obj) ? [1,.5,.5] :
+	           rcb.hitLabel(obj) ? [.3,1,1] : [1,1,1]);
+      }
    });
 }
