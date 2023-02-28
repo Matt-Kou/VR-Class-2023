@@ -1,14 +1,11 @@
+
+import { g2 } from "../util/g2.js";
 /*
-  This demo shows how you can make simple heads-up display (HUD)
-  controls. The text labels will follow you as your roam around
-  in the scene.
+	This demo shows how you can add heads-up display (HUD) objects.
 
-  When you are wearing your VR headset, you can point your controller
-  beams as the lines of text, and they will change color. You can use
-  this selection logic to start to build your own HUD controls.
+	The object will move together with you as you change your view,
+	and will always rotate to face you.
 */
-import { lcb, rcb } from '../handle_scenes.js';
-
 export const init = async model => {
    let isAnimate = 0, isItalic = 0, isClear = 0;
    model.control('a', 'animate', () => isAnimate = ! isAnimate);
